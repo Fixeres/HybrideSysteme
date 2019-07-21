@@ -24,7 +24,7 @@ public class Parser {
         boolean initSbs = false;
         for (lineNumber = 0; lineNumber < lines.size(); lineNumber++) {
             String line = lines.get(lineNumber);
-            if (line == null) {
+            if (line.equals("")) {
                 continue;
             }
             if (line.equals("DECL")) {
@@ -95,25 +95,25 @@ public class Parser {
             int cleft = 0;
             int cright = 0;
             for (int j = 0; j < parts.length; j++) {
-                String part = parts[i];
+                String part = parts[j];
                 part = part.replace("\t", "");
                 part = part.replace("_", "");
                 part = part.replace(" ", "");
                 part = part.replace(";", "");
                 if (part.indexOf("x") == -1) {
-                    if(i == 0){
+                    if(j == 0){
                         indexVar1 = -1;
                         cleft = Integer.parseInt(part);
-                    } else if (i == 1){
+                    } else if (j == 1){
                         indexVar2 = -1;
                         cright = Integer.parseInt(part);
                     }
                 } else {
                     part = part.replace("x", "");
-                    if (i == 0) {
+                    if (j == 0) {
                         indexVar1 = Integer.parseInt(part);
-                    } else if (i == 1) {
-                        String[] values = part.split(" + ");
+                    } else if (j == 1) {
+                        String[] values = part.split("\\+");
                         indexVar2 = Integer.parseInt(values[0]);
                         cright = Integer.parseInt(values[1]);
                     }

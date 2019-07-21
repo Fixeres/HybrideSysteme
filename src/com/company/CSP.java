@@ -30,6 +30,22 @@ public class CSP {
     }
 
     public void printCSP(){
+        System.out.println("DECL");
+        printDecl();
+        System.out.println();
+        System.out.println("FORMULA");
+        printFormula();
+    }
+
+    private void printDecl(){
+        for(int i = 0; i < vars.size(); i++){
+            System.out.println("x_" + vars.get(i).getPosition() +
+                            " " + vars.get(i).getLowerDomainBound() +
+                            " " + vars.get(i).getUpperDomainBound() + ";");
+        }
+    }
+
+    private void printFormula(){
         for(int i = 0; i < simpleConstraints.size(); i++){
             for(int j = 0; j < simpleConstraints.get(i).getSimpleBounds().size(); j++){
                 SimpleBound sB = simpleConstraints.get(i).getSimpleBounds().get(j);
@@ -38,7 +54,7 @@ public class CSP {
                 } else {
                     System.out.print("x_" + sB.getX().getPosition() +
                             " >= x_" + sB.getY().getPosition() +
-                            " + " + sB.getCleft());
+                            " + " + sB.getCright());
                 }
                 if(j < simpleConstraints.get(i).getSimpleBounds().size() - 1){
                     System.out.print(" v ");
