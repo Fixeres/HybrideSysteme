@@ -1,0 +1,7 @@
+this is a test
+
+DECL
+    x_0 0 0;
+
+FORMULA
+    x_0 >= x_0 + 0
