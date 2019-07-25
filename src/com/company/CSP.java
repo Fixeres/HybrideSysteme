@@ -66,22 +66,20 @@ class CSP {
 
         if (first == second) {
             if (first) {
-                if (simpleConstraints.get(cIndex).getSimpleBounds().size() == bIndex) {
-                    if (simpleConstraints.size() == cIndex) {
-                        System.out.print("P is satisfiable");
-                    } else {
-                        bIndex = 0;
-                        cIndex++;
-                        doAlgorithmA1();
-                    }
+                if (simpleConstraints.size() - 1 == cIndex) {
+                    System.out.print("P is satisfiable");
                 } else {
-                    bIndex++;
+                    bIndex = 0;
+                    cIndex++;
                     doAlgorithmA1();
                 }
-            } else {
-                cIndex = 0;
+            } else if (simpleConstraints.get(cIndex).getSimpleBounds().size() - 1 == bIndex) {
                 bIndex = 0;
+                cIndex = 0;
                 doAlgorithmA2();
+            } else {
+                bIndex++;
+                doAlgorithmA1();
             }
         } else {
             cIndex = 0;
@@ -160,7 +158,7 @@ class CSP {
                     System.out.print(sB.getCleft() + " >= " + sB.getCright());
                 } else {
                     System.out.print("x_" + sB.getX().getPosition() +
-                            " >= x_" + sB.getY().getPosition() +    //Was ist hier mit cleft? ist es ausgeschlossen das auf der links ein zusatz ist?
+                            " >= x_" + sB.getY().getPosition() +
                             " + " + sB.getCright());
                 }
                 if (j < simpleConstraint.getSimpleBounds().size() - 1) {
