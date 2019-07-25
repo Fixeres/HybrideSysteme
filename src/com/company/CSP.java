@@ -13,6 +13,7 @@ class CSP {
 
     private int cIndex = 0;
     private int bIndex = 0;
+    private boolean isInconclusive = false;
 
     private Stack<Variable> stack = new Stack();
 
@@ -44,16 +45,6 @@ class CSP {
             }
         }
 
-        /*
-        System.out.println(xP);
-        System.out.println(xU);
-        System.out.println(xL);
-        System.out.println(yP);
-        System.out.println(yU);
-        System.out.println(yL);
-        System.out.println(cright);
-        */
-
         boolean first = false;
         boolean second = false;
 
@@ -64,34 +55,46 @@ class CSP {
             second = true;
         }
 
-        if (first == second) {
-            if (first) {
+        if (first != second) {
+            if (first) {    //a true Simple Bound was found
                 if (simpleConstraints.size() - 1 == cIndex) {
-                    System.out.print("P is satisfiable");
+                    System.out.println("P is satisfiable");
+                    return;
                 } else {
                     bIndex = 0;
                     cIndex++;
                     doAlgorithmA1();
                 }
-            } else if (simpleConstraints.get(cIndex).getSimpleBounds().size() - 1 == bIndex) {
+            } else if (simpleConstraints.get(cIndex).getSimpleBounds().size() - 1 == bIndex) {  //a false Simple Bound was found
                 bIndex = 0;
                 cIndex = 0;
-                doAlgorithmA2();
+                if(isInconclusive){
+                    doAlgorithmA3();
+                } else {
+                    doAlgorithmA2();
+                }
             } else {
                 bIndex++;
                 doAlgorithmA1();
             }
-        } else {
-            cIndex = 0;
-            bIndex = 0;
-            doAlgorithmA3();
+        } else {//an inconclusive Simple Bound was found
+            isInconclusive = true;
+            if(simpleConstraints.get(cIndex).getSimpleBounds().size() - 1 == bIndex) {
+                cIndex = 0;
+                bIndex = 0;
+                doAlgorithmA3();
+            } else {
+                bIndex++;
+                doAlgorithmA1();
+            }
         }
     }
 
 
     private void doAlgorithmA2() {
         if (stack.empty()) {
-            System.out.print("P is unsatisfiable");
+            System.out.println("P is unsatisfiable");
+            return;
         } else {
 
             Variable variable = stack.pop();
@@ -104,24 +107,28 @@ class CSP {
 
     private void doAlgorithmA3() {
 
-        int xOld = 0;
-        int yNew = 0;
-        int xNew = 0;
-        int yOld = 0;
+        isInconclusive = false;
 
-        int position = 0;
+        Variable splitVariable1 = null;
+        Variable splitVariable2 = null;
+        for(Variable variable: vars){
+            if(variable.getUpperDomainBound() != variable.getLowerDomainBound()){
+                splitVariable1 = new Variable(variable.getLowerDomainBound(),
+                        (variable.getLowerDomainBound() + ((variable.getUpperDomainBound() - variable.getLowerDomainBound())/ 2)));
+                splitVariable1.setPosition(variable.getPosition());
+                splitVariable2 = new Variable(splitVariable1.getUpperDomainBound() + 1, variable.getUpperDomainBound());
+                splitVariable2.setPosition(variable.getPosition());
+                break;
+            }
+        }
 
-
-
-        Variable variable1 = new Variable(0, 0);
-        variable1.setPosition(position);
-        changeVariable(variable1);
-
-        Variable variable2 = new Variable(0, 0);
-        variable2.setPosition(position);
-        stack.push(variable2);
-
-        doAlgorithmA1();
+        if(splitVariable1 != null) {
+            changeVariable(splitVariable1);
+            stack.push(splitVariable2);
+            doAlgorithmA1();
+        } else {
+            doAlgorithmA2();
+        }
     }
 
     private void changeVariable(Variable variable) {

@@ -6,5 +6,6 @@ public class Main {
         CSP csp = new Parser().createCSP(file);
         csp.printCSP();
         csp.doAlgorithmA1();
+        csp.printCSP();
     }
 }
