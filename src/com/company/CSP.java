@@ -111,7 +111,7 @@ class CSP {
 
         int position = 0;
 
-        //todo SPLITTEN
+
 
         Variable variable1 = new Variable(0, 0);
         variable1.setPosition(position);

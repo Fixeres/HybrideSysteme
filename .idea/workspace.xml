@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>   word
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ded19962-990b-45cd-bc1b-c8bd9e088941" name="Default" comment="CSP Algorithm A implementiert ohne splitten des Intervals">
@@ -40,13 +40,13 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/company/CSP.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1343">
-              <caret line="82" column="13" lean-forward="true" selection-start-line="82" selection-start-column="13" selection-end-line="82" selection-end-column="13" />
+            <state relative-caret-position="442">
+              <caret line="113" column="8" selection-start-line="113" selection-start-column="8" selection-end-line="113" selection-end-column="8" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#4739#4740#0" expanded="true" />
-                <element signature="e#4811#4812#0" expanded="true" />
-                <element signature="e#4875#4876#0" expanded="true" />
+                <element signature="e#4724#4725#0" expanded="true" />
+                <element signature="e#4796#4797#0" expanded="true" />
+                <element signature="e#4860#4861#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -193,7 +193,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1564067376716" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1564067380210" />
     <property name="last_opened_file_path" value="C:/Program Files/Git/mingw64/bin/git.exe" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
@@ -390,7 +390,14 @@
       <option name="project" value="LOCAL" />
       <updated>1564065805815</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="CSP Algorithm A implementiert ohne splitten des Intervals">
+      <created>1564067389826</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1564067389826</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -560,13 +567,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/company/CSP.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1343">
-          <caret line="82" column="13" lean-forward="true" selection-start-line="82" selection-start-column="13" selection-end-line="82" selection-end-column="13" />
+        <state relative-caret-position="442">
+          <caret line="113" column="8" selection-start-line="113" selection-start-column="8" selection-end-line="113" selection-end-column="8" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4739#4740#0" expanded="true" />
-            <element signature="e#4811#4812#0" expanded="true" />
-            <element signature="e#4875#4876#0" expanded="true" />
+            <element signature="e#4724#4725#0" expanded="true" />
+            <element signature="e#4796#4797#0" expanded="true" />
+            <element signature="e#4860#4861#0" expanded="true" />
           </folding>
         </state>
       </provider>
