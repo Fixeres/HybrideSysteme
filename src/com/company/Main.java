@@ -5,5 +5,6 @@ public class Main {
         String file = "src/resources/CSP.txt";
         CSP csp = new Parser().createCSP(file);
         csp.printCSP();
+        csp.doAlgorithmA1();
     }
 }

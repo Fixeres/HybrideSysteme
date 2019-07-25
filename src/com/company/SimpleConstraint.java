@@ -5,17 +5,17 @@ import java.util.ArrayList;
 /**
  * Created by Alex on 20.07.2019.
  */
-public class SimpleConstraint {
+class SimpleConstraint {
 
     private ArrayList<SimpleBound> simpleBounds = new ArrayList<SimpleBound>();
 
-    public SimpleConstraint(){}
+    SimpleConstraint(){}
 
-    public void addSimpleBound(SimpleBound sB){
+    void addSimpleBound(SimpleBound sB){
         simpleBounds.add(sB);
     }
 
-    public ArrayList<SimpleBound> getSimpleBounds() {
+    ArrayList<SimpleBound> getSimpleBounds() {
         return simpleBounds;
     }
 }

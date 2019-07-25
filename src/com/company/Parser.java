@@ -5,15 +5,15 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class Parser {
+class Parser {
 
-    CSP csp;
+    private CSP csp;
 
-    public Parser() {
+    Parser() {
         csp = new CSP();
     }
 
-    public CSP createCSP(String file) {
+    CSP createCSP(String file) {
         List<String> lines = readFile(file);
         if (lines == null) {
             return null;
@@ -57,7 +57,6 @@ public class Parser {
     private void initVariables(String line) {
         String[] parts = line.split(" ");
 
-        int counter = 0;
         int lb = 0;
         int rb = 0;
         int position = 0;
