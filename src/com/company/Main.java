@@ -2,10 +2,11 @@ package com.company;
 
 public class Main {
     public static void main(String[] args) {
-        String file = "src/resources/CSP.txt";
+        String file = "src/resources/CSPA2.txt";
         CSP csp = new Parser().createCSP(file);
         csp.printCSP();
-        csp.doAlgorithmA1();
+        IAlgorithm algorithm = new AlgorithmB();
+        algorithm.start(csp);
         csp.printCSP();
     }
 }
