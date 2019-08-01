@@ -11,6 +11,7 @@ public class AlgorithmA implements IAlgorithm{
     protected boolean isInconclusive = false;
 
     private Stack<Variable> stack = new Stack();
+    long startTime = System.nanoTime();
 
     @Override
     public void start(CSP csp) {
@@ -54,6 +55,7 @@ public class AlgorithmA implements IAlgorithm{
             if (first) {    //a true Simple Bound was found
                 if (csp.getSimpleConstraints().size() - 1 == cIndex) {
                     System.out.println("P is satisfiable");
+                    System.out.println(System.nanoTime()-startTime);
                     return;
                 } else {
                     bIndex = 0;
@@ -89,6 +91,7 @@ public class AlgorithmA implements IAlgorithm{
     protected void doAlgorithmA2() {
         if (stack.empty()) {
             System.out.println("P is unsatisfiable");
+            System.out.println(System.nanoTime()-startTime);
             return;
         } else {
 

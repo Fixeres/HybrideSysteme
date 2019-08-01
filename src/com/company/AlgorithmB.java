@@ -40,6 +40,7 @@ public class AlgorithmB extends AlgorithmA {
             if (first) {    //a true Simple Bound was found
                 if (csp.getSimpleConstraints().size() - 1 == cIndex) {
                     System.out.println("P is satisfiable");
+                    System.out.println(System.nanoTime()-startTime);
                     return;
                 } else {
                     bIndex = 0;
