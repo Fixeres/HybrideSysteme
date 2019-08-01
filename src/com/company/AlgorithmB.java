@@ -99,14 +99,16 @@ public class AlgorithmB extends AlgorithmA {
         newXL = yL + cright;
         newYU = xU - cright;
 
-        if(newXL<xL){
+        if(newXL>xL){
             Variable newX = new Variable(newXL, xU);
             newX.setPosition(xP);
             changeVariable(newX);
             narrowed= true;
         }
-        if (newYU> yU){
+        if (newYU< yU){
             Variable newY = new Variable(yL, newYU);
+            newY.setPosition(xP);
+            changeVariable(newY);
             narrowed =true;
         }
 
@@ -115,6 +117,7 @@ public class AlgorithmB extends AlgorithmA {
         }else {
             doAlgorithmA3();
         }
+
     }
 
 
