@@ -3,26 +3,32 @@ package com.company;
 /**
  * Created by Alex on 20.07.2019.
  */
-public class SimpleBound {
-    private int x;
-    private int y;
-    private int c;
+class SimpleBound {
+    private Variable x;
+    private Variable y;
+    private int cleft;
+    private int cright;
 
-    public SimpleBound(int x, int y, int c) {
+    SimpleBound(Variable x, Variable y, int cleft, int cright) {
         this.x = x;
         this.y = y;
-        this.c = c;
+        this.cleft = cleft;
+        this.cright = cright;
     }
 
-    public int getX() {
+    Variable getX() {
         return x;
     }
 
-    public int getY() {
+    Variable getY() {
         return y;
     }
 
-    public int getC() {
-        return c;
+    int getCleft() {
+        return cleft;
+    }
+
+    int getCright() {
+        return cright;
     }
 }
