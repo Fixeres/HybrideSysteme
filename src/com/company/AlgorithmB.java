@@ -107,7 +107,7 @@ public class AlgorithmB extends AlgorithmA {
         }
         if (newYU< yU){
             Variable newY = new Variable(yL, newYU);
-            newY.setPosition(xP);
+            newY.setPosition(yP);
             changeVariable(newY);
             narrowed =true;
         }
