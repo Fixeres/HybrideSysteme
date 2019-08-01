@@ -6,33 +6,46 @@ public class AlgorithmB extends AlgorithmA {
 
     @Override
     protected void doAlgorithmA1() {
-        int xP = csp.getSimpleConstraints().get(cIndex).getSimpleBounds().get(bIndex).getX().getPosition();
+        int xP = 0;
+        int yP = 0;
+
+        if (csp.getSimpleConstraints().get(cIndex).getSimpleBounds().get(bIndex).getX() != null) {
+            xP = csp.getSimpleConstraints().get(cIndex).getSimpleBounds().get(bIndex).getX().getPosition();
+        }
         int xU = 0;
         int xL = 0;
-        int yP = csp.getSimpleConstraints().get(cIndex).getSimpleBounds().get(bIndex).getY().getPosition();
+        if (csp.getSimpleConstraints().get(cIndex).getSimpleBounds().get(bIndex).getY() != null) {
+            yP = csp.getSimpleConstraints().get(cIndex).getSimpleBounds().get(bIndex).getY().getPosition();
+        }
         int yU = 0;
         int yL = 0;
         int cright = csp.getSimpleConstraints().get(cIndex).getSimpleBounds().get(bIndex).getCright();
+        int cleft = csp.getSimpleConstraints().get(cIndex).getSimpleBounds().get(bIndex).getCleft();
 
 
         for (Variable variable : csp.getVars()) {
-            if (variable.getPosition() == xP) {
-                xU = variable.getUpperDomainBound();
-                xL = variable.getLowerDomainBound();
+            if (csp.getSimpleConstraints().get(cIndex).getSimpleBounds().get(bIndex).getX() != null) {
+                if (variable.getPosition() == xP) {
+                    xU = variable.getUpperDomainBound();
+                    xL = variable.getLowerDomainBound();
+                }
             }
-            if (variable.getPosition() == yP) {
-                yU = variable.getUpperDomainBound();
-                yL = variable.getLowerDomainBound();
+            if (csp.getSimpleConstraints().get(cIndex).getSimpleBounds().get(bIndex).getY() != null) {
+                if (variable.getPosition() == yP) {
+                    yU = variable.getUpperDomainBound();
+                    yL = variable.getLowerDomainBound();
+                }
             }
         }
 
         boolean first = false;
         boolean second = false;
 
-        if (xL >= yU + cright) {
+
+        if (xL + cleft >= yU + cright) {
             first = true;
         }
-        if (xU < yL + cright) {
+        if (xU + cleft < yL + cright) {
             second = true;
         }
 
