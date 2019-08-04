@@ -3,6 +3,7 @@ package com.company;
 public class AlgorithmB extends AlgorithmA {
 
     boolean unit= false;
+    SimpleBound unitSB;
 
     @Override
     protected void doAlgorithmA1() {
@@ -66,7 +67,7 @@ public class AlgorithmB extends AlgorithmA {
                 cIndex = 0;
                 if (isInconclusive) {
                     if(unit){
-                        doDeduction(xP,xL,xU,yP,yL,yU,cright);
+                        doDeduction();
                     }else {
                         doAlgorithmA3();
                     }
@@ -80,6 +81,7 @@ public class AlgorithmB extends AlgorithmA {
         } else {//an inconclusive Simple Bound was found
             if(!isInconclusive){
                 unit=true;
+                unitSB = csp.getSimpleConstraints().get(cIndex).getSimpleBounds().get(bIndex);
             }else {
                 unit=false;
             }
@@ -89,7 +91,7 @@ public class AlgorithmB extends AlgorithmA {
                 cIndex = 0;
                 bIndex = 0;
                 if(unit){
-                    doDeduction(xP,xL,xU,yP,yL,yU,cright);
+                    doDeduction();
                 }else {
                     doAlgorithmA3();
                 }
@@ -100,7 +102,7 @@ public class AlgorithmB extends AlgorithmA {
         }
     }
 
-    private void doDeduction(int xP,int xL,int xU, int yP, int yL,int yU,int cright) {
+    private void doDeduction() {
 
         boolean narrowed= false;
 
@@ -110,18 +112,32 @@ public class AlgorithmB extends AlgorithmA {
         int newXL;
         int newYU;
 
-        newXL = yL + cright;
-        newYU = xU - cright;
+        Variable x = null;
+        Variable y = null;
 
-        if(newXL>xL){
+        for(Variable var : csp.getVars()){
+            if(var.getPosition() == unitSB.getX().getPosition()){
+                x = var;
+            } else if(var.getPosition() == unitSB.getY().getPosition()){
+                y = var;
+            }
+        }
+
+        int xU = x.getUpperDomainBound();
+        int yL = y.getLowerDomainBound();
+
+        newXL = yL + unitSB.getCright();
+        newYU = xU - unitSB.getCright();
+
+        if(newXL>x.getLowerDomainBound()){
             Variable newX = new Variable(newXL, xU);
-            newX.setPosition(xP);
+            newX.setPosition(x.getPosition());
             changeVariable(newX);
             narrowed= true;
         }
-        if (newYU< yU){
+        if (newYU< y.getUpperDomainBound()){
             Variable newY = new Variable(yL, newYU);
-            newY.setPosition(yP);
+            newY.setPosition(y.getPosition());
             changeVariable(newY);
             narrowed =true;
         }
