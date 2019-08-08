@@ -1,9 +1,30 @@
 package com.company;
 
-public class AlgorithmB extends AlgorithmA {
+import javax.swing.table.TableRowSorter;
+import java.util.ArrayList;
+import static com.company.TruthValueConstraint.*;
 
-    boolean unit= false;
-    SimpleBound unitSB;
+/**
+ * Created by Alex on 08.08.2019.
+ */
+public class AlgorithmC extends AlgorithmB {
+
+    private int positionX;
+    private int positionY;
+
+    private ArrayList<TruthValueConstraint> truthValSC;
+
+    @Override
+    public void start(CSP csp) {
+        this.csp = csp;
+        truthValSC = new ArrayList<TruthValueConstraint>();
+        for(int i = 0; i < csp.getSimpleConstraints().size(); i++){
+            truthValSC.add(NOT_VISITED);
+        }
+        positionX = -1;
+        positionY = -1;
+        doAlgorithmA1();
+    }
 
     @Override
     protected void doAlgorithmA1() {
@@ -23,7 +44,6 @@ public class AlgorithmB extends AlgorithmA {
         int cright = csp.getSimpleConstraints().get(cIndex).getSimpleBounds().get(bIndex).getCright();
         int cleft = csp.getSimpleConstraints().get(cIndex).getSimpleBounds().get(bIndex).getCleft();
 
-
         for (Variable variable : csp.getVars()) {
             if (csp.getSimpleConstraints().get(cIndex).getSimpleBounds().get(bIndex).getX() != null) {
                 if (variable.getPosition() == xP) {
@@ -39,9 +59,32 @@ public class AlgorithmB extends AlgorithmA {
             }
         }
 
+        if(!needToCheckConstraint()){
+            if(csp.getSimpleConstraints().size() - 1 == cIndex){
+                if(truthValSC.get(cIndex).equals(TRUE)){
+                    System.out.println("P is satisfiable");
+                    System.out.println(System.nanoTime()-startTime);
+                    return;
+                }else if(truthValSC.get(cIndex).equals(FALSE)){
+                    bIndex = 0;
+                    cIndex = 0;
+                    doAlgorithmA2();
+                }else if(truthValSC.get(cIndex).equals(INCONCLUSIVE)){
+                    bIndex = 0;
+                    cIndex = 0;
+                    doAlgorithmA3();
+                }else{
+                    throw new RuntimeException();
+                }
+            } else {
+                cIndex++;
+                bIndex = 0;
+                doAlgorithmA1();
+            }
+        }
+
         boolean first = false;
         boolean second = false;
-
 
         if (xL + cleft >= yU + cright) {
             first = true;
@@ -102,7 +145,11 @@ public class AlgorithmB extends AlgorithmA {
         }
     }
 
+    @Override
     protected void doDeduction() {
+
+        positionX = -1;
+        positionY = -1;
 
         boolean narrowed= false;
 
@@ -132,12 +179,14 @@ public class AlgorithmB extends AlgorithmA {
         if(newXL>x.getLowerDomainBound()){
             Variable newX = new Variable(newXL, xU);
             newX.setPosition(x.getPosition());
+            positionX = newX.getPosition();
             changeVariable(newX);
             narrowed= true;
         }
         if (newYU< y.getUpperDomainBound()){
             Variable newY = new Variable(yL, newYU);
             newY.setPosition(y.getPosition());
+            positionY = newY.getPosition();
             changeVariable(newY);
             narrowed =true;
         }
@@ -150,6 +199,77 @@ public class AlgorithmB extends AlgorithmA {
 
     }
 
+    @Override
+    protected void doAlgorithmA2() {
+        if (stack.empty()) {
+            System.out.println("P is unsatisfiable");
+            System.out.println(System.nanoTime() - startTime);
+            return;
+        } else {
+
+            Variable variable = stack.pop();
+
+            resetTruthList();
+            changeVariable(variable);
+
+            doAlgorithmA1();
+        }
+    }
+
+    @Override
+    protected void doAlgorithmA3() {
+
+        positionY = -1;
+        isInconclusive = false;
+
+        Variable splitVariable1 = null;
+        Variable splitVariable2 = null;
+        for (Variable variable : csp.getVars()) {
+            if (variable.getUpperDomainBound() != variable.getLowerDomainBound()) {
+                splitVariable1 = new Variable(variable.getLowerDomainBound(),
+                        (variable.getLowerDomainBound() + ((variable.getUpperDomainBound() - variable.getLowerDomainBound()) / 2)));
+                splitVariable1.setPosition(variable.getPosition());
+                splitVariable2 = new Variable(splitVariable1.getUpperDomainBound() + 1, variable.getUpperDomainBound());
+                splitVariable2.setPosition(variable.getPosition());
+                break;
+            }
+        }
+
+        if (splitVariable1 != null) {
+            changeVariable(splitVariable1);
+            positionX = splitVariable1.getPosition();
+            stack.push(splitVariable2);
+            doAlgorithmA1();
+        } else {
+            doAlgorithmA2();
+        }
+    }
+
+    private boolean needToCheckConstraint(){
+        if(truthValSC.get(cIndex).equals(TRUE)){
+            return false;
+        }
+        for(int i = 0; i < csp.getSimpleConstraints().get(cIndex).getSimpleBounds().size(); i++){
+            if(csp.getSimpleConstraints().get(cIndex).getSimpleBounds().get(i).getX() != null &&
+                    csp.getSimpleConstraints().get(cIndex).getSimpleBounds().get(i).getX().getPosition() == positionX){
+                return true;
+            } else if(csp.getSimpleConstraints().get(cIndex).getSimpleBounds().get(i).getY() != null &&
+                    csp.getSimpleConstraints().get(cIndex).getSimpleBounds().get(i).getY().getPosition() == positionY){
+                return true;
+            }
+        }
+        if(truthValSC.get(cIndex).equals(NOT_VISITED)){
+            return true;
+        }
+        return false;
+    }
+
+    private void resetTruthList(){
+        for(int i = 0; i < truthValSC.size(); i++){
+            truthValSC.set(i, NOT_VISITED);
+        }
+        positionX = -1;
+        positionY = -1;
+    }
 
 }
-

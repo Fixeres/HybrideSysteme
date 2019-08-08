@@ -10,7 +10,7 @@ public class AlgorithmA implements IAlgorithm {
     protected int bIndex = 0;
     protected boolean isInconclusive = false;
 
-    private Stack<Variable> stack = new Stack();
+    protected Stack<Variable> stack = new Stack();
     long startTime = System.nanoTime();
 
     @Override
