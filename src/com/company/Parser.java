@@ -5,6 +5,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
+/**
+ * The parser reads out the file and puts the data in our data structure
+ */
 class Parser {
 
     private CSP csp;
@@ -54,6 +57,10 @@ class Parser {
         return null;
     }
 
+    /**
+     * reads out the variables and puts the into an ArrayList
+     * @param line
+     */
     private void initVariables(String line) {
         String[] parts = line.split(" ");
 
@@ -82,6 +89,10 @@ class Parser {
         }
     }
 
+    /**
+     * reads out the SimpleBounds and puts them into a list
+     * @param line
+     */
     private void initSbs(String line) {
         SimpleConstraint sC = new SimpleConstraint();
         String[] sBs = line.split("v");

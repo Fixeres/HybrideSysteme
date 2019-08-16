@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 /**
- * Created by Alex on 20.07.2019.
+ * Data structure of csp
  */
 
 class CSP {
