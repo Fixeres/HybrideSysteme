@@ -1,7 +1,7 @@
 package com.company;
 
 /**
- * Created by Alex on 08.08.2019.
+ * Enum for the truth values for Algoirthm C
  */
 public enum TruthValueConstraint {
     TRUE,

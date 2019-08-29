@@ -1,5 +1,9 @@
 package com.company;
 
+/**
+ * Data structure for the variables
+ * saves domain and position
+ */
 class Variable {
     private int lowerDomainBound;
     private int upperDomainBound;

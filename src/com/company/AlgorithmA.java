@@ -24,6 +24,8 @@ public class AlgorithmA implements IAlgorithm {
         int xP = 0;
         int yP = 0;
 
+        //Taking the variable out of the list that are in the bounds
+        //Testing that the bound has variables
         if (csp.getSimpleConstraints().get(cIndex).getSimpleBounds().get(bIndex).getX() != null) {
             xP = csp.getSimpleConstraints().get(cIndex).getSimpleBounds().get(bIndex).getX().getPosition();
         }
@@ -56,7 +58,7 @@ public class AlgorithmA implements IAlgorithm {
         boolean first = false;
         boolean second = false;
 
-
+        //Testing if the bound is true, false or inconclusive
         if (xL + cleft >= yU + cright) {
             first = true;
         }
@@ -64,8 +66,12 @@ public class AlgorithmA implements IAlgorithm {
             second = true;
         }
 
+        //are first and second not equal is the bound not inconclusive
         if (first != second) {
-            if (first) {    //a true Simple Bound was found
+            if (first) {   //a true Simple Bound was found
+                //checks if it was the last constraint in a csp
+                //If so the csp is true
+                //else check the next constraint and do this method again
                 if (csp.getSimpleConstraints().size() - 1 == cIndex) {
                     System.out.println("P is satisfiable");
                     System.out.println(System.nanoTime() - startTime);
@@ -75,19 +81,26 @@ public class AlgorithmA implements IAlgorithm {
                     cIndex++;
                     doAlgorithmA1();
                 }
-            } else if (csp.getSimpleConstraints().get(cIndex).getSimpleBounds().size() - 1 == bIndex) {  //a false Simple Bound was found
+            } else if (csp.getSimpleConstraints().get(cIndex).getSimpleBounds().size() - 1 == bIndex) {  //a false Simple Bound was found and is the last bound in the constraint
                 bIndex = 0;
                 cIndex = 0;
+
+                //if an inconclusive bound is in the constraint do Step 3
+                //if not do Step 2
                 if (isInconclusive) {
                     doAlgorithmA3();
                 } else {
                     doAlgorithmA2();
                 }
-            } else {
+            }
+            //if it is not the last bound check the next, the constraint could have a true value
+            else {
                 bIndex++;
                 doAlgorithmA1();
             }
         } else {//an inconclusive Simple Bound was found
+            //set the value on true and then check the next bounds if it wasn't the last
+            //else do Step 3
             isInconclusive = true;
             if (csp.getSimpleConstraints().get(cIndex).getSimpleBounds().size() - 1 == bIndex) {
                 cIndex = 0;
@@ -101,6 +114,11 @@ public class AlgorithmA implements IAlgorithm {
     }
 
 
+    /**
+     * Implementation of Step 2
+     * If the stack is empty than the csp unsatisfiable
+     * else change the variable with the last variable of the stack
+     */
     protected void doAlgorithmA2() {
         if (stack.empty()) {
             System.out.println("P is unsatisfiable");
@@ -116,6 +134,12 @@ public class AlgorithmA implements IAlgorithm {
         }
     }
 
+    /**
+     * Implementation of Step 3
+     * Sets values back
+     * Splits a variable and chooses one and puts the ohter in the stack
+     * The algorithm is than done all over again
+     */
     protected void doAlgorithmA3() {
 
         isInconclusive = false;
@@ -142,6 +166,10 @@ public class AlgorithmA implements IAlgorithm {
         }
     }
 
+    /**
+     * Changes the variable with the one out of the stack
+     * @param variable
+     */
     protected void changeVariable(Variable variable) {
         for (Variable variable1 : csp.getVars()) {
             if (variable.getPosition() == variable1.getPosition()) {

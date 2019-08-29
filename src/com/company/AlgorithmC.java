@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import static com.company.TruthValueConstraint.*;
 
 /**
- * Created by Alex on 08.08.2019.
+ * Implementation of Exercise 2f
  */
 public class AlgorithmC extends AlgorithmB {
 
@@ -26,11 +26,14 @@ public class AlgorithmC extends AlgorithmB {
         doAlgorithmA1();
     }
 
+
     @Override
     protected void doAlgorithmA1() {
         int xP = 0;
         int yP = 0;
 
+        //Taking the variable out of the list that are in the bounds
+        //Testing that the bound has variables
         if (csp.getSimpleConstraints().get(cIndex).getSimpleBounds().get(bIndex).getX() != null) {
             xP = csp.getSimpleConstraints().get(cIndex).getSimpleBounds().get(bIndex).getX().getPosition();
         }
@@ -145,6 +148,7 @@ public class AlgorithmC extends AlgorithmB {
         }
     }
 
+    //Changes the interval when the bound was unit
     @Override
     protected void doDeduction() {
 
@@ -199,6 +203,11 @@ public class AlgorithmC extends AlgorithmB {
 
     }
 
+    /**
+     * Implementation of Step 2
+     * If the stack is empty than the csp unsatisfiable
+     * else change the variable with the last variable of the stack
+     */
     @Override
     protected void doAlgorithmA2() {
         if (stack.empty()) {
@@ -216,6 +225,12 @@ public class AlgorithmC extends AlgorithmB {
         }
     }
 
+    /**
+     * Implementation of Step 3
+     * Sets values back
+     * Splits a variable and chooses one and puts the ohter in the stack
+     * The algorithm is than done all over again
+     */
     @Override
     protected void doAlgorithmA3() {
 
@@ -245,6 +260,12 @@ public class AlgorithmC extends AlgorithmB {
         }
     }
 
+
+    /**
+     * check if a bound was already visited or already labeled true
+     * returns if the bound needs to be checked
+     * @return
+     */
     private boolean needToCheckConstraint(){
         if(truthValSC.get(cIndex).equals(TRUE)){
             return false;
@@ -264,6 +285,9 @@ public class AlgorithmC extends AlgorithmB {
         return false;
     }
 
+    /**
+     * Resets the list so it can be started over
+     */
     private void resetTruthList(){
         for(int i = 0; i < truthValSC.size(); i++){
             truthValSC.set(i, NOT_VISITED);

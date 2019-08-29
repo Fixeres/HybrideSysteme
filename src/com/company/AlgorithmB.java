@@ -1,15 +1,30 @@
 package com.company;
 
+
+/**
+ * This class implements Algotihm B (2c)
+ */
 public class AlgorithmB extends AlgorithmA {
 
+    //value that is set true if it is unit
+    //and the bound that is unit
     boolean unit= false;
     SimpleBound unitSB;
 
+
+    /**
+     * Overriden method from Algorthm A
+     * Does Algorithm A with the extend of testing if a bound is unit
+     * and then deducing new intervals
+     */
     @Override
     protected void doAlgorithmA1() {
         int xP = 0;
         int yP = 0;
 
+
+        //Taking the variable out of the list that are in the bounds
+        //Testing that the bound has variables
         if (csp.getSimpleConstraints().get(cIndex).getSimpleBounds().get(bIndex).getX() != null) {
             xP = csp.getSimpleConstraints().get(cIndex).getSimpleBounds().get(bIndex).getX().getPosition();
         }
@@ -22,6 +37,7 @@ public class AlgorithmB extends AlgorithmA {
         int yL = 0;
         int cright = csp.getSimpleConstraints().get(cIndex).getSimpleBounds().get(bIndex).getCright();
         int cleft = csp.getSimpleConstraints().get(cIndex).getSimpleBounds().get(bIndex).getCleft();
+
 
 
         for (Variable variable : csp.getVars()) {
@@ -42,6 +58,7 @@ public class AlgorithmB extends AlgorithmA {
         boolean first = false;
         boolean second = false;
 
+    //Testing if the bound is true, false or inconclusive
 
         if (xL + cleft >= yU + cright) {
             first = true;
@@ -50,8 +67,12 @@ public class AlgorithmB extends AlgorithmA {
             second = true;
         }
 
+        //are first and second not equal is the bound not inconclusive
         if (first != second) {
             if (first) {    //a true Simple Bound was found
+                //checks if it was the last constraint in a csp
+                //If so the csp is true
+                //else check the next constraint and do this method again
                 if (csp.getSimpleConstraints().size() - 1 == cIndex) {
                     System.out.println("P is satisfiable");
                     System.out.println(System.nanoTime()-startTime);
@@ -63,6 +84,7 @@ public class AlgorithmB extends AlgorithmA {
                     doAlgorithmA1();
                 }
             } else if (csp.getSimpleConstraints().get(cIndex).getSimpleBounds().size() - 1 == bIndex) {  //a false Simple Bound was found
+                //
                 bIndex = 0;
                 cIndex = 0;
                 if (isInconclusive) {
@@ -79,6 +101,7 @@ public class AlgorithmB extends AlgorithmA {
                 doAlgorithmA1();
             }
         } else {//an inconclusive Simple Bound was found
+            //checks if the bound wasn't already inconclusive
             if(!isInconclusive){
                 unit=true;
                 unitSB = csp.getSimpleConstraints().get(cIndex).getSimpleBounds().get(bIndex);
@@ -102,6 +125,7 @@ public class AlgorithmB extends AlgorithmA {
         }
     }
 
+    //changes the interval when the bound was unit
     protected void doDeduction() {
 
         boolean narrowed= false;

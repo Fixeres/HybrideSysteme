@@ -1,7 +1,8 @@
 package com.company;
 
 /**
- * Created by Alex on 20.07.2019.
+ * This class represents the Simple Bounds
+ * the variables are put here
  */
 class SimpleBound {
     private Variable x;

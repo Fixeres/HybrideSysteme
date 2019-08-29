@@ -3,7 +3,7 @@ package com.company;
 import java.util.ArrayList;
 
 /**
- * Created by Alex on 20.07.2019.
+ * Data structure for the Simple Constraints
  */
 class SimpleConstraint {
 
